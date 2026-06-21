@@ -1,0 +1,14 @@
+# macOS / OS junk
+.DS_Store
+.AppleDouble
+Thumbs.db
+
+# Exported trip data (keep these off the public repo)
+*.csv
+catch_trip*.json
+catch_trip_backup*.json
+
+# Editor / temp
+.vscode/
+*.swp
+*~
