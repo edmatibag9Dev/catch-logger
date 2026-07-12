@@ -1,19 +1,24 @@
 # Catch Logger
 
-> Offline, installable PWA for logging a saltwater fishing trip's catch and estimating
-> fish-processing cost at sea with no internet: log pounds per species per day, compare two
-> San Diego processors, reconcile estimate vs. actual at the dock, then export CSV/JSON —
-> all in device-local storage, nothing uploaded.
+> Offline, installable PWA for logging a saltwater fishing trip fish-by-fish and estimating the
+> fish-processing bill at sea with no internet: log every kept fish individually (species, whole
+> weight, time, notes), allocate value-added from a specific fish, compare two San Diego processors,
+> reconcile estimate vs. actual at the dock, then export CSV/JSON — all in device-local storage,
+> nothing uploaded.
 
 ## Start here
-- [AGENTS.md](AGENTS.md): canonical agent guide — file map, data contract, and verification gates.
+- [AGENTS.md](AGENTS.md): canonical agent guide — cost model, file map, data contract, verification gates. **Read before touching the cost math.**
 - [README.md](README.md): human quickstart.
+- [SPEC-catch-log.md](SPEC-catch-log.md): design spec for the per-fish model and the corrected cost rules.
 - [CHANGELOG.md](CHANGELOG.md): version history.
 - [CONTRIBUTING.md](CONTRIBUTING.md): commit + README standard.
 
 ## App
-- [index.html](index.html): the entire app — cost engine, UI, and local-storage persistence, inline.
-- [sw.js](sw.js): service worker — offline caching of the app shell (bump cache version on app changes).
+- [engine.js](engine.js): the cost engine — **SINGLE SOURCE OF TRUTH. Never copy this math.**
+- [index.html](index.html): the app — UI, tabs, and local-storage persistence. Loads engine.js.
+- [test-engine.js](test-engine.js): engine regression suite, 61 assertions.
+- [test-dom.js](test-dom.js): UI smoke test, 33 assertions.
+- [sw.js](sw.js): service worker — offline caching (bump the cache name on every app change).
 - [manifest.webmanifest](manifest.webmanifest): PWA manifest — name, icons, standalone display.
 - [icon-180.png](icon-180.png): iOS home-screen icon.
 - [icon-512.png](icon-512.png): maskable app icon.
@@ -21,8 +26,12 @@
 
 ## Key rules
 - Offline-first, on-device only: no network calls for data, nothing uploaded; local storage is the source of truth.
-- Cost engine must stay penny-for-penny identical to the Saltwater Trip Planner and the Numbers calculator.
-- Self-contained: all engine/UI/state live in index.html — no external dependencies, no build step.
+- **Parity with the Numbers spreadsheet or the planner webpage is NOT a correctness criterion.** Those two still carry the v1 cost bugs (a pooled value-added minimum, and no minimum at all on canning). All three copies used to agree with each other and all three were wrong. Correctness is defined by test-engine.js and Fisherman's stated policy.
+- The cost engine lives only in engine.js. If another artifact needs the math, it reads engine.js.
+- Value-added is drawn from an individual fish: each allocation is 0 or >= 15 lb (smoke, jerky, AND canning), the sum cannot exceed that fish's weight, and the remainder is fillet. Pounds do not pool across fish.
+- Tier is species-gated, not weight-derived: Bluefin, Wahoo, and White Seabass never price at the under-12 rate no matter how small.
+- Every logged fish was kept and killed, so every logged fish bills. Disposition is not modeled.
+- The fishing day is explicit, never inferred from a timestamp.
 - Any change to cached assets requires bumping the cache version in sw.js so installed devices refresh.
 - Public repo: never commit keys, analytics, or personal identifiers.
 - Commits follow CONTRIBUTING.md; update README/CHANGELOG on every feat/fix.

@@ -22,7 +22,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
   font-size:16px;line-height:1.4;-webkit-text-size-adjust:100%;}
-body{padding-bottom:84px;max-width:560px;margin:0 auto;}
+body{padding-bottom:140px;max-width:560px;margin:0 auto;}
 h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;}
 .appbar{background:var(--navy);color:#fff;padding:calc(env(safe-area-inset-top) + 12px) 16px 12px;
   position:sticky;top:0;z-index:30;}
@@ -44,31 +44,64 @@ input,select{width:100%;height:42px;border:1px solid var(--line);border-radius:1
 input.amt{background:var(--cream);border-color:var(--creamline);text-align:right;font-family:var(--mono);}
 input:focus,select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(44,122,107,.15);}
 
-.splist{margin-top:12px;}
-.sphead{display:grid;grid-template-columns:1fr 88px 86px;gap:8px;font-size:11px;color:var(--navy);
-  font-weight:600;padding:0 2px 6px;text-transform:uppercase;letter-spacing:.4px;}
-.sphead span:nth-child(2){text-align:center;}
-.sphead span:nth-child(3){text-align:right;}
-.sprow{display:grid;grid-template-columns:1fr 88px 86px;gap:8px;align-items:center;
-  padding:7px 2px;border-top:1px solid var(--line);}
-.sprow .nm{font-size:15px;}
-.sprow .cost{text-align:right;font-family:var(--mono);font-size:14px;color:var(--ink);}
-.sprow .cost.na{color:#B9C0C9;}
+/* ---- species tile grid ---- */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.tile{height:62px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);
+  font-family:var(--sans);font-size:13px;font-weight:600;line-height:1.2;padding:6px 4px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;}
+.tile:active{background:var(--band);border-color:var(--teal);}
+.tile .cnt{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--muted);}
+.tile.has .cnt{color:var(--teal);font-weight:600;}
+.tile.add{border-style:dashed;color:var(--muted);font-weight:500;}
 
-details.extras{margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
-details.extras>summary{list-style:none;cursor:pointer;padding:11px 12px;background:var(--band);
-  font-size:13px;color:var(--teal);font-weight:500;display:flex;align-items:center;gap:8px;}
-details.extras>summary::-webkit-details-marker{display:none;}
-details.extras>summary .chev{transition:transform .2s;}
-details.extras[open]>summary .chev{transform:rotate(90deg);}
-.extras .body{padding:12px;}
-.va-grid{display:grid;grid-template-columns:1fr repeat(4,1fr);gap:6px;align-items:center;}
-.va-grid .vh{font-size:10px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.3px;}
-.va-grid .vn{font-size:13px;}
-.va-grid input{height:38px;padding:0 6px;font-size:14px;text-align:center;}
-.va-grid input.off{background:var(--grey);border-color:var(--grey);}
-.extrarow{display:flex;gap:8px;margin-top:12px;}
-.extrarow .fld{flex:1;}
+/* ---- species sections + fish rows ---- */
+.spsec{border-top:1px solid var(--line);padding:9px 2px;}
+.spsec:first-child{border-top:0;}
+.spsec .hd{display:flex;align-items:baseline;justify-content:space-between;gap:8px;}
+.spsec .hd .nm{font-size:14px;font-weight:600;color:var(--navy);}
+.spsec .hd .st{font-family:var(--mono);font-size:12px;color:var(--muted);}
+.spsec.empty .hd .nm{font-weight:400;color:#AAB2BC;}
+.spsec.empty .hd .st{color:#C4CAD2;}
+.spsec .sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.fishrow{display:flex;align-items:center;gap:8px;padding:8px 0 8px 10px;margin-top:7px;
+  border-left:3px solid var(--band);}
+.fishrow .t{font-family:var(--mono);font-size:11px;color:var(--muted);width:42px;flex:0 0 auto;}
+.fishrow .w{font-family:var(--mono);font-size:15px;font-weight:600;width:66px;flex:0 0 auto;}
+.fishrow .mid{flex:1;min-width:0;}
+.fishrow .nt{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fishrow .cash{font-family:var(--mono);font-size:12px;color:var(--muted);flex:0 0 auto;}
+.fishrow.va{border-left-color:var(--teal);}
+.badge{display:inline-block;font-family:var(--sans);font-size:9.5px;font-weight:600;padding:1px 5px;
+  border-radius:4px;margin-left:5px;vertical-align:middle;letter-spacing:.3px;}
+.b-u12{background:#FFF4E5;color:#8A5A12;border:1px solid #F2D9A8;}
+.b-va{background:var(--band);color:var(--teal);border:1px solid #BFDDD5;}
+.b-bl{background:#F3F0FA;color:#5B4A8A;border:1px solid #D9D0EE;}
+
+/* ---- sheet (fish entry / VA) ---- */
+.scrim{position:fixed;inset:0;background:rgba(20,28,40,.45);z-index:50;display:flex;align-items:flex-end;
+  justify-content:center;}
+.scrim.hide{display:none !important;}
+.sheet{background:#fff;width:100%;max-width:560px;border-radius:18px 18px 0 0;padding:16px 16px
+  calc(env(safe-area-inset-bottom) + 16px);max-height:92vh;overflow-y:auto;}
+.sheet h3{font-size:17px;color:var(--navy);margin-bottom:2px;}
+.sheet .sh-sub{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.sheet .row{display:flex;gap:8px;margin-top:10px;}
+.sheet .row .fld{flex:1;}
+.sheet .acts{display:flex;gap:8px;margin-top:16px;}
+.sheet .acts .btn{margin-top:0;}
+.bigw{height:64px !important;font-size:30px !important;font-family:var(--mono) !important;text-align:center !important;
+  font-weight:600;background:var(--cream);border-color:var(--creamline);}
+.valloc{margin-top:10px;}
+.valloc .vr{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);}
+.valloc .vr .vn{flex:1;font-size:14px;}
+.valloc .vr .vn small{display:block;font-size:11px;color:var(--muted);font-family:var(--mono);}
+.valloc .vr input{width:96px;flex:0 0 auto;text-align:right;font-family:var(--mono);background:var(--cream);
+  border-color:var(--creamline);}
+.allowbar{background:var(--band);border:1px solid #CFE2DC;border-radius:10px;padding:10px 12px;margin-top:12px;
+  font-size:12.5px;color:var(--teal);font-family:var(--mono);}
+.err{background:#FDECEC;border:1px solid #F0C4C4;color:var(--red);border-radius:10px;padding:9px 11px;
+  font-size:12.5px;margin-top:10px;}
+.err.hide{display:none !important;}
 
 .result{background:var(--teal);color:#fff;border-radius:12px;padding:13px 15px;margin-top:14px;}
 .result .pair{display:flex;justify-content:space-between;font-size:13px;color:#CDEAE0;}
@@ -78,10 +111,32 @@ details.extras[open]>summary .chev{transform:rotate(90deg);}
 .result .cheap{margin-top:6px;font-size:13px;color:#CDEAE0;}
 .result .cheap b{color:#C8F0D8;font-weight:600;}
 
-.triptotal{background:var(--navy);color:#fff;border-radius:12px;padding:12px 15px;display:flex;
-  align-items:baseline;justify-content:space-between;}
-.triptotal .t{font-size:13px;color:#C7D3E6;}
-.triptotal .v{font-size:22px;font-weight:600;font-family:var(--mono);}
+/* ---- sticky totals bar ---- */
+.stick{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom));max-width:560px;
+  margin:0 auto;background:var(--navy);color:#fff;padding:9px 14px;display:flex;align-items:center;
+  justify-content:space-between;gap:10px;z-index:35;border-top:1px solid #1E3A66;}
+.stick.hide{display:none !important;}
+.stick .l{font-size:11px;color:#C7D3E6;line-height:1.35;}
+.stick .l b{color:#fff;font-family:var(--mono);font-weight:600;font-size:13px;}
+.stick .r{text-align:right;font-size:11px;color:#C7D3E6;line-height:1.35;}
+.stick .r b{display:block;color:#fff;font-family:var(--mono);font-weight:600;font-size:18px;}
+.stick .go{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:9px;height:38px;padding:0 12px;
+  font-size:12px;font-family:var(--sans);font-weight:600;flex:0 0 auto;}
+
+details.extras{margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+details.extras>summary{list-style:none;cursor:pointer;padding:11px 12px;background:var(--band);
+  font-size:13px;color:var(--teal);font-weight:500;display:flex;align-items:center;gap:8px;}
+details.extras>summary::-webkit-details-marker{display:none;}
+details.extras>summary .chev{transition:transform .2s;}
+details.extras[open]>summary .chev{transform:rotate(90deg);}
+.extras .body{padding:12px;}
+.extrarow{display:flex;gap:8px;}
+.extrarow .fld{flex:1;}
+.va-grid{display:grid;grid-template-columns:1fr repeat(4,1fr);gap:6px;align-items:center;}
+.va-grid .vh{font-size:10px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:.3px;}
+.va-grid .vn{font-size:13px;}
+.va-grid input{height:38px;padding:0 6px;font-size:14px;text-align:center;}
+.va-grid input.off{background:var(--grey);border-color:var(--grey);}
 
 .tabbar{position:fixed;bottom:0;left:0;right:0;max-width:560px;margin:0 auto;background:#fff;
   border-top:1px solid var(--line);display:flex;z-index:40;padding-bottom:env(safe-area-inset-bottom);}
@@ -89,7 +144,6 @@ details.extras[open]>summary .chev{transform:rotate(90deg);}
   display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--sans);}
 .tabbar button .ic{font-size:21px;line-height:1;}
 .tabbar button.on{color:var(--teal);}
-.tabbar button.on .ic{color:var(--teal);}
 
 .cmp{width:100%;border-collapse:collapse;font-size:13px;}
 .cmp th,.cmp td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:right;}
@@ -104,15 +158,21 @@ details.extras[open]>summary .chev{transform:rotate(90deg);}
 .btn.primary{background:var(--teal);color:#fff;}
 .btn.nav{background:var(--navy);color:#fff;}
 .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--navy);}
+.btn:disabled{opacity:.45;}
 .note{font-size:12px;color:var(--muted);margin:8px 2px 0;line-height:1.5;}
 .hide{display:none !important;}
-.pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:var(--band);
-  color:var(--teal);border:1px solid var(--creamline);}
-.invoice-grid{display:flex;gap:8px;}
-.invoice-grid .fld{flex:1;}
 .warn{background:#FFF4E5;border:1px solid #F2D9A8;color:#8A5A12;border-radius:10px;padding:9px 11px;
   font-size:12.5px;margin-top:10px;}
+.good{background:#EAF5EF;border:1px solid #BFE0CD;color:var(--green);border-radius:10px;padding:9px 11px;
+  font-size:12.5px;margin-top:10px;}
 .miniheader{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:4px 2px 8px;}
+.invoice-grid{display:flex;gap:8px;}
+.invoice-grid .fld{flex:1;}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:150px;background:var(--ink);color:#fff;
+  padding:11px 16px;border-radius:11px;font-size:13px;z-index:60;display:flex;align-items:center;gap:12px;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);max-width:90%;}
+.toast.hide{display:none !important;}
+.toast button{background:none;border:0;color:#7FD4B8;font-weight:600;font-size:13px;font-family:var(--sans);}
 </style>
 </head>
 <body>
@@ -121,7 +181,7 @@ details.extras[open]>summary .chev{transform:rotate(90deg);}
   <div class="sub" id="appsub">Offline · saves to this phone</div>
 </div>
 
-<!-- ============ AT-SEA LOG ============ -->
+<!-- ============ TAB 1: AT SEA ============ -->
 <div class="wrap view" id="view-log">
   <div class="card">
     <div class="daynav">
@@ -130,69 +190,66 @@ details.extras[open]>summary .chev{transform:rotate(90deg);}
       <button id="dnext" aria-label="Next day">›</button>
     </div>
     <div class="daymeta">
-      <div class="fld"><label class="lbl">Date</label><input type="text" id="d-date" placeholder="e.g. Sep 5" inputmode="text"></div>
-      <div class="fld"><label class="lbl">Pay</label>
+      <div class="fld"><label class="lbl">Date</label><input type="text" id="d-date" placeholder="e.g. Sep 5"></div>
+      <div class="fld"><label class="lbl">Paying with</label>
         <select id="d-pay"><option value="cash">Cash</option><option value="card">Card</option></select></div>
     </div>
-
-    <div class="splist">
-      <div class="sphead"><span>Species</span><span>Caught lb</span><span>Cheaper $</span></div>
-      <div id="sprows"></div>
+    <div class="extrarow" style="margin-top:8px">
+      <button class="btn ghost" id="addday" style="margin-top:0;height:40px;font-size:13px">+ Add day</button>
+      <button class="btn ghost" id="delday" style="margin-top:0;height:40px;font-size:13px">Remove day</button>
     </div>
+  </div>
 
+  <div class="card">
+    <h2 class="section-title">Log a fish</h2>
+    <div class="tiles" id="tiles"></div>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">Today's catch</h2>
+    <div id="daylog"></div>
+  </div>
+
+  <div class="card">
     <details class="extras">
-      <summary><span class="chev">›</span> Value-added &amp; extras <span class="pill" style="margin-left:auto">optional</span></summary>
+      <summary><span class="chev">›</span> Collars, gill &amp; gut, shipping</summary>
       <div class="body">
-        <div class="miniheader">Per species — smoke/jerky need 15 lb min</div>
-        <div class="va-grid" id="va-head">
-          <span class="vh" style="text-align:left">Fish</span><span class="vh">Und-12</span><span class="vh">Smoke</span><span class="vh">Jerky</span><span class="vh">Can</span>
-        </div>
-        <div id="varows"></div>
         <div class="extrarow">
           <div class="fld"><label class="lbl">Collars (ea)</label><input type="number" inputmode="decimal" id="d-collars" class="amt" min="0"></div>
           <div class="fld"><label class="lbl">Gill &amp; gut lb</label><input type="number" inputmode="decimal" id="d-gillgut" class="amt" min="0"></div>
           <div class="fld"><label class="lbl">Ship boxes</label><input type="number" inputmode="decimal" id="d-boxes" class="amt" min="0"></div>
         </div>
+        <div class="note">Shipping is Fisherman's only. Boxes $65 ea + $75 handling, $10 for each box over two.</div>
       </div>
     </details>
-
     <div class="result" id="d-result">
       <div class="pair"><span id="d-fp">Fisherman's —</span><span id="d-fs">Five Star —</span></div>
       <div class="big"><span class="t">Day est. total</span><span class="v" id="d-est">—</span></div>
       <div class="cheap">Cheaper: <b id="d-cheap">—</b></div>
     </div>
-    <div class="extrarow" style="margin-top:12px">
-      <button class="btn ghost" id="addday" style="margin-top:0">+ Add day</button>
-      <button class="btn ghost" id="delday" style="margin-top:0">Remove day</button>
-    </div>
   </div>
-
-  <div class="triptotal"><span class="t">Trip estimate (all days · est. total)</span><span class="v" id="trip-est">—</span></div>
-  <div class="note">Logs save automatically. Add this page to your Home Screen so the data sticks. Export a backup nightly from the Summary tab.</div>
 </div>
 
-<!-- ============ DOCK ACTUALS ============ -->
+<!-- ============ TAB 2: DOCK ============ -->
 <div class="wrap view hide" id="view-actual">
   <div class="card">
-    <h2 class="section-title">Dock actuals — whole trip</h2>
-    <div class="note" style="margin-top:0">Enter the processor's actual weights for the whole catch (one drop-off), then the real invoice you paid.</div>
-    <div class="daymeta" style="margin-top:12px">
-      <div class="fld"><label class="lbl">Pay</label>
+    <h2 class="section-title">At the dock — actual weights</h2>
+    <div class="note" style="margin-top:0">One drop-off for the whole trip. Enter the processor's scale weights and fish counts by species.</div>
+    <div class="daymeta">
+      <div class="fld"><label class="lbl">Paying with</label>
         <select id="a-pay"><option value="cash">Cash</option><option value="card">Card</option></select></div>
-      <div class="fld"><label class="lbl">Processor used</label>
+      <div class="fld"><label class="lbl">Processor</label>
         <select id="a-proc"><option value="">—</option><option value="fp">Fisherman's</option><option value="fs">Five Star</option></select></div>
     </div>
-    <div class="splist">
-      <div class="sphead"><span>Species</span><span>Actual lb</span><span>Cheaper $</span></div>
-      <div id="a-sprows"></div>
-    </div>
+    <div id="a-sprows" style="margin-top:12px"></div>
     <details class="extras">
-      <summary><span class="chev">›</span> Value-added &amp; extras <span class="pill" style="margin-left:auto">optional</span></summary>
+      <summary><span class="chev">›</span> Value-added &amp; extras (actual)</summary>
       <div class="body">
-        <div class="miniheader">Per species — smoke/jerky need 15 lb min</div>
-        <div class="va-grid"><span class="vh" style="text-align:left">Fish</span><span class="vh">Und-12</span><span class="vh">Smoke</span><span class="vh">Jerky</span><span class="vh">Can</span></div>
+        <div class="va-grid" id="a-va-head">
+          <span class="vh" style="text-align:left">Species</span><span class="vh">Smoke</span><span class="vh">Jerky</span><span class="vh">Can</span><span class="vh"></span>
+        </div>
         <div id="a-varows"></div>
-        <div class="extrarow">
+        <div class="extrarow" style="margin-top:12px">
           <div class="fld"><label class="lbl">Collars (ea)</label><input type="number" inputmode="decimal" id="a-collars" class="amt" min="0"></div>
           <div class="fld"><label class="lbl">Gill &amp; gut lb</label><input type="number" inputmode="decimal" id="a-gillgut" class="amt" min="0"></div>
           <div class="fld"><label class="lbl">Ship boxes</label><input type="number" inputmode="decimal" id="a-boxes" class="amt" min="0"></div>
@@ -204,385 +261,668 @@ details.extras[open]>summary .chev{transform:rotate(90deg);}
       <div class="big"><span class="t">Actual cost (computed)</span><span class="v" id="a-est">—</span></div>
       <div class="cheap">Cheaper: <b id="a-cheap">—</b></div>
     </div>
-    <div class="miniheader" style="margin-top:16px">Real invoice you paid</div>
-    <div class="invoice-grid">
+    <div class="invoice-grid" style="margin-top:14px">
       <div class="fld"><label class="lbl">Invoice $ paid</label><input type="number" inputmode="decimal" id="a-invoice" class="amt" min="0"></div>
     </div>
-    <div class="note" id="a-recon"></div>
+    <div id="a-recon"></div>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">Count check</h2>
+    <div id="a-count"></div>
+    <div class="note">Pounds drift. Count doesn't. A count mismatch means a fish went missing between the rail and the scale.</div>
   </div>
 </div>
 
-<!-- ============ SUMMARY & EXPORT ============ -->
+<!-- ============ TAB 3: SUMMARY ============ -->
 <div class="wrap view hide" id="view-summary">
   <div class="card">
-    <h2 class="section-title">Estimate vs actual</h2>
+    <h2 class="section-title">Estimate vs. actual</h2>
     <table class="cmp" id="cmp-table"><thead>
-      <tr><th>Species</th><th>Est lb</th><th>Act lb</th><th>Δ lb</th></tr>
+      <tr><th>Species</th><th>Est. fish</th><th>Est. lb</th><th>Actual lb</th><th>Δ</th></tr>
     </thead><tbody id="cmp-body"></tbody></table>
     <table class="cmp" id="cost-table" style="margin-top:14px"><tbody id="cost-body"></tbody></table>
   </div>
+
   <div class="card">
-    <h2 class="section-title">Save the record</h2>
+    <h2 class="section-title">Export</h2>
     <button class="btn primary" id="exp-csv">Export CSV (share to tablet/Files)</button>
     <button class="btn nav" id="copy-sum">Copy trip summary</button>
     <button class="btn ghost" id="exp-json">Backup data file (.json)</button>
-    <div class="note">Send the CSV to yourself at the dock. In a Cowork session it becomes your Numbers archive, Day One entry, and Open Brain note. The .json is a full backup you can re-import.</div>
+    <div class="note">The CSV carries a per-day count &amp; weight table (your legal record) plus a fish-by-fish detail sheet (the journal).</div>
   </div>
+
   <div class="card">
-    <h2 class="section-title">Rates <span class="pill" style="margin-left:6px">June 2026</span></h2>
-    <div class="note" style="margin-top:0">Edit only if the webpage pricing changes. Stored on this phone.</div>
+    <h2 class="section-title">Rates</h2>
+    <div class="miniheader">Stored on this device · June 2026 published rates</div>
     <div id="rate-editor"></div>
     <button class="btn ghost" id="rate-reset">Reset to June 2026 rates</button>
+    <div class="note">Value-added minimum is <b id="rate-vamin">15</b> lb per treatment, <b>per fish</b>. Pounds do not pool across fish.</div>
   </div>
+
   <div class="card">
-    <h2 class="section-title">Reset</h2>
+    <h2 class="section-title">Trip</h2>
+    <button class="btn ghost" id="exp-v1" style="display:none">Download old v1 data (.json)</button>
     <button class="btn ghost" id="newtrip" style="color:var(--red)">Start a new trip (clear all)</button>
   </div>
 </div>
 
-<!-- ============ TAB BAR ============ -->
+<!-- ============ SHEETS ============ -->
+<div class="scrim hide" id="scrim">
+  <div class="sheet" id="sheet"></div>
+</div>
+<div class="toast hide" id="toast"><span id="toast-msg"></span><button id="toast-act">Undo</button></div>
+
+<!-- ============ STICKY TOTALS ============ -->
+<div class="stick hide" id="stick">
+  <div class="l" id="stick-l">—</div>
+  <div class="r" id="stick-r"><b id="stick-trip">—</b>trip estimate</div>
+  <button class="go" id="stick-go">Summary ›</button>
+</div>
+
 <div class="tabbar">
   <button data-view="log" class="on"><span class="ic">⚓</span>At sea</button>
   <button data-view="actual"><span class="ic">⚖︎</span>Dock</button>
   <button data-view="summary"><span class="ic">▤</span>Summary</button>
 </div>
 
+<script src="engine.js"></script>
 <script>
 "use strict";
-/* ===== ENGINE — identical math to the webpage & Numbers sheet ===== */
-var DEFAULT_RATES={
-  fp:{name:"Fisherman's",big:1.95,small:2.80,smoke:3.50,jerky:4.50,can:5.50,collar:5.00,gillgut:1.55,deposit:100,ccfee:0.03,box:65,handling:75,extrabox:10,ship:true},
-  fs:{name:"Five Star", big:1.97,small:1.97,smoke:2.75,jerky:3.75,can:5.50,collar:5.19,gillgut:1.50,deposit:0,  ccfee:0.0395,box:0,handling:0,extrabox:0,ship:false}
-};
-var VAMIN=15;
-var SPECIES=[
- {k:'yt',  n:'Yellowtail',     tier:'big',  sub:true,  sm:true,  jk:false, cn:false},
- {k:'bft', n:'Bluefin Tuna',   tier:'big',  sub:false, sm:true,  jk:true,  cn:true },
- {k:'yft', n:'Yellowfin Tuna', tier:'big',  sub:true,  sm:true,  jk:true,  cn:true },
- {k:'wahoo',n:'Wahoo',         tier:'big',  sub:false, sm:true,  jk:false, cn:false},
- {k:'rock',n:'Rockfish',       tier:'small',sub:false, sm:false, jk:false, cn:false}
-];
-function num(x){x=parseFloat(x);return (isNaN(x)||x<0)?0:x;}
-function spCost(sp,v,R){
-  v=v||{};
-  var sm=sp.sm?num(v.sm):0, jk=sp.jk?num(v.jk):0, cn=sp.cn?num(v.cn):0;
-  var es=sm>=VAMIN?sm:0, ej=jk>=VAMIN?jk:0, ec=cn;
-  var caught=num(v.c);
-  var fillet=Math.max(0,caught-(es+ej+ec));
-  var fbig,fsmall;
-  if(sp.tier==='small'){fbig=0;fsmall=fillet;}
-  else if(sp.sub){var u=Math.min(num(v.u),fillet);fsmall=u;fbig=fillet-u;}
-  else{fbig=fillet;fsmall=0;}
-  return fbig*R.big+fsmall*R.small+es*R.smoke+ej*R.jerky+ec*R.can;
-}
-/* one catch set -> processing subtotal (excludes deposit; deposit applied once at trip level) */
-function setProc(set,R){
-  var p=0; SPECIES.forEach(function(sp){p+=spCost(sp,(set.sp||{})[sp.k],R);});
-  p+=num(set.collars)*R.collar+num(set.gillgut)*R.gillgut;
-  return p;
-}
-function setShip(set,R){
-  var b=num(set.boxes);
-  return (b>0&&R.ship)?(b*R.box+R.handling+Math.max(0,b-2)*R.extrabox):0;
-}
-/* quote for a list of sets (1 for actuals, N days for estimate); deposit once */
-function quote(sets,R,pay){
-  var proc=0,ship=0;
-  sets.forEach(function(s){proc+=setProc(s,R);ship+=setShip(s,R);});
-  var fee=(pay==='card')?proc*R.ccfee:0;
-  var est=proc+fee;
-  var net=est-R.deposit;
-  return {proc:proc,fee:fee,est:est,net:net,ship:ship};
-}
-function money(n){return '$'+(Math.round(n*100)/100).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+/* ===================== STATE ===================== */
+var KEY='catchlogger.v2', OLDKEY='catchlogger.v1';
 
-/* ===== STATE ===== */
-var KEY='catchlogger.v1';
-var state=load();
-function blankSet(){return {sp:{},collars:'',gillgut:'',boxes:'',pay:'cash',date:''};}
+function blankDay(){ return {date:'',pay:'cash',fish:[],collars:'',gillgut:'',boxes:''}; }
+function blankActual(){ return {sp:{},cnt:{},collars:'',gillgut:'',boxes:'',pay:'cash'}; }
+function freshState(rates){
+  return {v:2,days:[blankDay()],cur:0,custom:[],actual:blankActual(),actualProc:'',invoice:'',
+          rates:rates||JSON.parse(JSON.stringify(DEFAULT_RATES))};
+}
 function load(){
-  try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.days)return s;}catch(e){}
-  return {days:[blankSet()],cur:0,actual:blankSet(),actualProc:'',invoice:'',rates:JSON.parse(JSON.stringify(DEFAULT_RATES))};
+  try{ var s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.v===2&&s.days) return s; }catch(e){}
+  /* v1 → v2: no lossy conversion. Bulk pounds cannot be faithfully expanded into
+     fish rows, and v1's value-added figures may encode pricing the processor
+     won't honor. Preserve v1 verbatim, offer it as a download, start clean.    */
+  try{
+    var old=localStorage.getItem(OLDKEY);
+    if(old && !localStorage.getItem(OLDKEY+'.backup')) localStorage.setItem(OLDKEY+'.backup',old);
+  }catch(e){}
+  return freshState();
 }
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
-function R(k){return state.rates[k];}
+var state=load();
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function(){});
 
-/* ===== AT-SEA LOG RENDER ===== */
-function curDay(){return state.days[state.cur];}
-function renderSpRows(){
-  var box=document.getElementById('sprows');box.innerHTML='';
-  var d=curDay();
-  SPECIES.forEach(function(sp){
-    var row=document.createElement('div');row.className='sprow';
-    var v=d.sp[sp.k]||{};
-    row.innerHTML='<span class="nm">'+sp.n+'</span>'+
-      '<input type="number" inputmode="decimal" min="0" class="amt" data-k="'+sp.k+'" value="'+(v.c||'')+'">'+
-      '<span class="cost" id="spc-'+sp.k+'">—</span>';
-    box.appendChild(row);
-  });
-  box.querySelectorAll('input').forEach(function(inp){
-    inp.addEventListener('input',function(){
-      var k=inp.getAttribute('data-k');var d=curDay();d.sp[k]=d.sp[k]||{};d.sp[k].c=inp.value;save();recalcDay();
-    });
-  });
+function R(k){ return state.rates[k]; }
+function curDay(){ return state.days[state.cur]; }
+function allSpecies(){
+  return SPECIES.concat((state.custom||[]).map(function(c){
+    return {k:c.k,n:c.n,u12:!!c.u12,sm:false,jk:false,cn:false,custom:true};
+  }));
 }
-function renderVaRows(){
-  var box=document.getElementById('varows');box.innerHTML='';
-  var d=curDay();
-  SPECIES.forEach(function(sp){
-    var v=d.sp[sp.k]||{};
-    var g=document.createElement('div');g.className='va-grid';g.style.marginTop='6px';
-    function cell(field,on,val){
-      if(!on)return '<input class="off" disabled>';
-      return '<input type="number" inputmode="decimal" min="0" data-k="'+sp.k+'" data-f="'+field+'" value="'+(val||'')+'">';
+function sp(k){ return spec(k,state.custom); }
+function nextId(){ return 'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function nowHM(){ var d=new Date(); return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); }
+
+/* ===================== TOAST / UNDO ===================== */
+var undoBuf=null, toastT=null;
+function toast(msg,undoFn){
+  var t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  var b=document.getElementById('toast-act');
+  b.style.display=undoFn?'block':'none';
+  b.onclick=function(){ if(undoFn)undoFn(); t.classList.add('hide'); };
+  t.classList.remove('hide');
+  clearTimeout(toastT); toastT=setTimeout(function(){ t.classList.add('hide'); },4500);
+}
+
+/* ===================== SHEETS ===================== */
+function openSheet(html){
+  document.getElementById('sheet').innerHTML=html;
+  document.getElementById('scrim').classList.remove('hide');
+}
+function closeSheet(){ document.getElementById('scrim').classList.add('hide'); }
+document.getElementById('scrim').onclick=function(e){ if(e.target.id==='scrim') closeSheet(); };
+
+/* ---- fish entry sheet (new + edit) ---- */
+function fishSheet(spKey,existing){
+  var s=sp(spKey); if(!s) return;
+  var f=existing||{id:null,sp:spKey,lb:'',t:nowHM(),notes:'',va:{}};
+  var isNew=!existing;
+  openSheet(
+    '<h3>'+s.n+'</h3>'+
+    '<div class="sh-sub">'+(isNew?'New fish':'Edit fish')+' · whole weight, as the processor scales it</div>'+
+    '<label class="lbl">Weight (lb)</label>'+
+    '<input type="number" inputmode="decimal" step="0.5" min="0" id="f-lb" class="bigw" value="'+(f.lb||'')+'" placeholder="0">'+
+    '<div class="row">'+
+      '<div class="fld"><label class="lbl">Time</label><input type="time" id="f-t" value="'+(f.t||nowHM())+'"></div>'+
+    '</div>'+
+    '<div class="row"><div class="fld"><label class="lbl">Notes (journal)</label>'+
+      '<input type="text" id="f-notes" placeholder="jig, depth, how it ate…" value="'+String(f.notes||'').replace(/"/g,'&quot;')+'"></div></div>'+
+    '<div id="f-vaslot"></div>'+
+    '<div class="err hide" id="f-err"></div>'+
+    '<div class="acts">'+
+      '<button class="btn ghost" id="f-cancel">Cancel</button>'+
+      (isNew?'<button class="btn nav" id="f-more">Save &amp; add another</button>':'<button class="btn ghost" id="f-del" style="color:var(--red)">Delete</button>')+
+      '<button class="btn primary" id="f-save">Save</button>'+
+    '</div>'
+  );
+  var lbEl=document.getElementById('f-lb');
+  function renderVaSlot(){
+    var slot=document.getElementById('f-vaslot');
+    var lb=num(lbEl.value);
+    var probe={sp:spKey,lb:lb,va:f.va||{}};
+    if(!hasVA(s)){ slot.innerHTML=''; return; }
+    if(!vaEligible(probe,s)){
+      slot.innerHTML='<div class="note" style="margin-top:12px">Value-added needs a single fish of at least '+VAMIN+
+        ' lb. Pounds don\'t pool across fish.</div>';
+      return;
     }
-    g.innerHTML='<span class="vn">'+sp.n.split(' ')[0]+'</span>'+
-      cell('u',sp.sub,v.u)+cell('sm',sp.sm,v.sm)+cell('jk',sp.jk,v.jk)+cell('cn',sp.cn,v.cn);
-    box.appendChild(g);
-  });
-  box.querySelectorAll('input:not(.off)').forEach(function(inp){
-    inp.addEventListener('input',function(){
-      var k=inp.getAttribute('data-k'),f=inp.getAttribute('data-f');var d=curDay();
-      d.sp[k]=d.sp[k]||{};d.sp[k][f]=inp.value;save();recalcDay();
+    slot.innerHTML='<div class="valloc"><div class="miniheader" style="margin-top:14px">Value-added — '+VAMIN+
+      ' lb minimum each, drawn from this fish</div>'+
+      VA_TYPES.filter(function(t){return s[t.k];}).map(function(t){
+        return '<div class="vr"><span class="vn">'+t.n+'<small>$'+R('fp')[t.rate].toFixed(2)+' fp · $'+R('fs')[t.rate].toFixed(2)+' fs</small></span>'+
+          '<input type="number" inputmode="decimal" step="0.5" min="0" data-va="'+t.k+'" value="'+((f.va&&f.va[t.k])||'')+'" placeholder="0"></div>';
+      }).join('')+'</div><div class="allowbar" id="f-allow"></div>';
+    slot.querySelectorAll('[data-va]').forEach(function(i){ i.addEventListener('input',syncVa); });
+    syncVa();
+  }
+  function readVa(){
+    var va={};
+    document.querySelectorAll('#f-vaslot [data-va]').forEach(function(i){ va[i.getAttribute('data-va')]=num(i.value); });
+    return va;
+  }
+  function syncVa(){
+    var lb=num(lbEl.value), va=readVa();
+    var probe={sp:spKey,lb:lb,va:va};
+    var used=num(va.sm)+num(va.jk)+num(va.cn);
+    var bar=document.getElementById('f-allow');
+    if(bar){
+      var left=lb-used;
+      bar.textContent=lb+' lb fish · '+used+' lb value-added · '+(Math.round(left*10)/10)+' lb fillet';
+      bar.style.borderColor = left<0 ? '#F0C4C4' : '#CFE2DC';
+    }
+    var e=vaErrors(probe,s), box=document.getElementById('f-err');
+    box.classList.toggle('hide',e.length===0);
+    box.textContent=e[0]||'';
+    document.getElementById('f-save').disabled=e.length>0;
+    var m=document.getElementById('f-more'); if(m) m.disabled=e.length>0;
+  }
+  lbEl.addEventListener('input',renderVaSlot);
+  renderVaSlot();
+  setTimeout(function(){ lbEl.focus(); },80);
+
+  function commit(){
+    var lb=num(lbEl.value);
+    if(lb<=0){ var b=document.getElementById('f-err'); b.classList.remove('hide'); b.textContent='Enter a weight.'; return false; }
+    var rec={ id:f.id||nextId(), sp:spKey, lb:lb,
+              t:document.getElementById('f-t').value||nowHM(),
+              notes:document.getElementById('f-notes').value||'', va:readVa() };
+    if(vaErrors(rec,s).length) return false;
+    if(f.id){ var arr=curDay().fish; for(var i=0;i<arr.length;i++) if(arr[i].id===f.id){ arr[i]=rec; break; } }
+    else curDay().fish.push(rec);
+    save(); refreshDay();
+    return true;
+  }
+  document.getElementById('f-cancel').onclick=closeSheet;
+  document.getElementById('f-save').onclick=function(){ if(commit()) closeSheet(); };
+  var more=document.getElementById('f-more');
+  if(more) more.onclick=function(){ if(commit()) fishSheet(spKey); };
+  var del=document.getElementById('f-del');
+  if(del) del.onclick=function(){
+    var arr=curDay().fish, removed=null, idx=-1;
+    for(var i=0;i<arr.length;i++) if(arr[i].id===f.id){ removed=arr[i]; idx=i; arr.splice(i,1); break; }
+    save(); refreshDay(); closeSheet();
+    toast(s.n+' '+removed.lb+' lb removed', function(){
+      curDay().fish.splice(idx,0,removed); save(); refreshDay();
     });
+  };
+}
+
+/* ---- custom species sheet ---- */
+function customSheet(){
+  openSheet(
+    '<h3>Other species</h3><div class="sh-sub">Fillet only — custom species never carry value-added.</div>'+
+    '<label class="lbl">Name</label><input type="text" id="c-name" placeholder="e.g. Cabrilla">'+
+    '<div class="row" style="align-items:center;gap:10px;margin-top:14px">'+
+      '<input type="checkbox" id="c-u12" style="width:22px;height:22px;flex:0 0 auto">'+
+      '<label for="c-u12" style="font-size:13px;flex:1">Can price at Fisherman\'s under-12 rate ($'+
+        R('fp').small.toFixed(2)+'/lb) when under 12 lb</label>'+
+    '</div>'+
+    '<div class="note">Leave unchecked if this species always bills at the 12 lb+ rate, like Wahoo or Bluefin.</div>'+
+    '<div class="acts"><button class="btn ghost" id="c-cancel">Cancel</button>'+
+    '<button class="btn primary" id="c-save">Add species</button></div>'
+  );
+  document.getElementById('c-cancel').onclick=closeSheet;
+  document.getElementById('c-save').onclick=function(){
+    var n=(document.getElementById('c-name').value||'').trim();
+    if(!n) return;
+    var k='c'+((state.custom||[]).length+1)+Date.now().toString(36).slice(-3);
+    state.custom=state.custom||[];
+    state.custom.push({k:k,n:n,u12:document.getElementById('c-u12').checked});
+    save(); refreshDay(); closeSheet(); fishSheet(k);
+  };
+}
+
+/* ===================== AT SEA ===================== */
+function renderTiles(){
+  var box=document.getElementById('tiles'); box.innerHTML='';
+  var day=curDay();
+  allSpecies().forEach(function(s){
+    var n=day.fish.filter(function(f){return f.sp===s.k;}).length;
+    var b=document.createElement('button');
+    b.className='tile'+(n?' has':'');
+    b.innerHTML='<span>'+s.n+'</span><span class="cnt">'+(n?n+(n===1?' fish':' fish'):'—')+'</span>';
+    b.onclick=function(){ fishSheet(s.k); };
+    box.appendChild(b);
+  });
+  var add=document.createElement('button');
+  add.className='tile add';
+  add.innerHTML='<span>+ Other</span><span class="cnt">custom</span>';
+  add.onclick=customSheet;
+  box.appendChild(add);
+}
+
+function renderDayLog(){
+  var box=document.getElementById('daylog'); box.innerHTML='';
+  var day=curDay();
+  /* Fixed species order, always. Empty species collapse to one muted line —
+     the layout is the same shape every day, so muscle memory holds. */
+  allSpecies().forEach(function(s){
+    var fish=day.fish.filter(function(f){return f.sp===s.k;});
+    var sec=document.createElement('div');
+    sec.className='spsec'+(fish.length?'':' empty');
+    var lb=0,u12=0,bl=0;
+    fish.forEach(function(f){
+      lb+=num(f.lb);
+      if(isUnder12(f,s)){ u12+=num(f.lb); }
+      if(s.u12&&num(f.lb)>=10&&num(f.lb)<=14) bl++;
+    });
+    var st=fish.length ? (fish.length+' · '+lbs(lb)+' lb') : '—';
+    sec.innerHTML='<div class="hd"><span class="nm">'+s.n+'</span><span class="st">'+st+'</span></div>'+
+      (u12?'<div class="sub">'+lbs(u12)+' lb under 12'+(bl?' · '+bl+' borderline':'')+'</div>':
+        (bl?'<div class="sub">'+bl+' borderline</div>':''));
+    fish.sort(function(a,b){ return String(a.t).localeCompare(String(b.t)); });
+    fish.forEach(function(f){
+      var a=vaApplied(f,s), anyVa=(a.sm+a.jk+a.cn)>0;
+      var row=document.createElement('div');
+      row.className='fishrow'+(anyVa?' va':'');
+      var badges='';
+      if(isUnder12(f,s)) badges+='<span class="badge b-u12">U12</span>';
+      if(s.u12&&num(f.lb)>=10&&num(f.lb)<=14) badges+='<span class="badge b-bl">~</span>';
+      if(anyVa){
+        var tags=[];
+        if(a.sm)tags.push('smoke '+lbs(a.sm)); if(a.jk)tags.push('jerky '+lbs(a.jk)); if(a.cn)tags.push('can '+lbs(a.cn));
+        badges+='<span class="badge b-va">'+tags.join(' · ')+'</span>';
+      }
+      row.innerHTML='<span class="t">'+(f.t||'')+'</span>'+
+        '<span class="w">'+lbs(num(f.lb))+' lb</span>'+
+        '<span class="mid">'+badges+(f.notes?'<div class="nt">'+escHtml(f.notes)+'</div>':'')+'</span>'+
+        '<span class="cash">'+money(fishCost(f,R('fp'),state.custom))+'</span>';
+      row.onclick=function(){ fishSheet(s.k,f); };
+      sec.appendChild(row);
+    });
+    box.appendChild(sec);
   });
 }
+function escHtml(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
 function recalcDay(){
-  var d=curDay();d.pay=document.getElementById('d-pay').value;
-  d.collars=document.getElementById('d-collars').value;
-  d.gillgut=document.getElementById('d-gillgut').value;
-  d.boxes=document.getElementById('d-boxes').value;
-  d.date=document.getElementById('d-date').value;
-  save();
-  SPECIES.forEach(function(sp){
-    var pf=spCost(sp,d.sp[sp.k],R('fp')), ps=spCost(sp,d.sp[sp.k],R('fs'));
-    var lo=Math.min(pf,ps);
-    var el=document.getElementById('spc-'+sp.k);
-    el.textContent=(pf+ps>0)?money(lo):'—';
-    el.className='cost'+((pf+ps>0)?'':' na');
-  });
-  var qf=quote([d],R('fp'),d.pay), qs=quote([d],R('fs'),d.pay);
-  document.getElementById('d-fp').textContent="Fisherman's "+money(qf.est);
-  document.getElementById('d-fs').textContent="Five Star "+money(qs.est);
-  document.getElementById('d-est').textContent=money(Math.min(qf.est,qs.est));
-  document.getElementById('d-cheap').textContent=cheaper(qf.proc,qs.proc);
-  renderTripTotal();
+  var day=curDay();
+  var fp=setProc(day,R('fp'),state.custom), fs=setProc(day,R('fs'),state.custom);
+  var feeF=(day.pay==='card')?fp*R('fp').ccfee:0, feeS=(day.pay==='card')?fs*R('fs').ccfee:0;
+  var tf=fp+feeF, ts=fs+feeS;
+  document.getElementById('d-fp').textContent="Fisherman's "+money(tf);
+  document.getElementById('d-fs').textContent="Five Star "+money(ts);
+  document.getElementById('d-est').textContent=money(Math.min(tf,ts));
+  document.getElementById('d-cheap').textContent=cheaper(tf,ts);
+  renderStick();
 }
-function cheaper(a,b){return a<b-0.005?"Fisherman's":(b<a-0.005?"Five Star":"— tie —");}
-function renderTripTotal(){
-  var qf=quote(state.days,R('fp'),'mix'); // pay varies; compute per-day est sum instead
-  var ef=0,es=0;
-  state.days.forEach(function(d){ef+=quote([d],R('fp'),d.pay).est;es+=quote([d],R('fs'),d.pay).est;});
-  document.getElementById('trip-est').textContent=money(Math.min(ef,es));
+function renderStick(){
+  var st=dayStats(curDay(),state.custom);
+  var qf=quote(state.days,R('fp'),curDay().pay,state.custom);
+  var qs=quote(state.days,R('fs'),curDay().pay,state.custom);
+  document.getElementById('stick-l').innerHTML=
+    'Day '+(state.cur+1)+' · <b>'+st.n+'</b> fish · <b>'+lbs(st.lb)+'</b> lb';
+  document.getElementById('stick-trip').textContent=money(Math.min(qf.est,qs.est));
+  document.getElementById('stick').classList.toggle('hide',
+    document.getElementById('view-log').classList.contains('hide'));
 }
+document.getElementById('stick-go').onclick=function(){ switchView('summary'); };
+
 function loadDayMeta(){
   var d=curDay();
-  document.getElementById('d-pay').value=d.pay||'cash';
+  document.getElementById('dlabel').textContent='Day '+(state.cur+1)+' of '+state.days.length;
   document.getElementById('d-date').value=d.date||'';
+  document.getElementById('d-pay').value=d.pay||'cash';
   document.getElementById('d-collars').value=d.collars||'';
   document.getElementById('d-gillgut').value=d.gillgut||'';
   document.getElementById('d-boxes').value=d.boxes||'';
-  document.getElementById('dlabel').textContent='Day '+(state.cur+1)+' of '+state.days.length;
+  document.getElementById('dprev').disabled=state.cur===0;
+  document.getElementById('dnext').disabled=state.cur===state.days.length-1;
 }
-function refreshDay(){loadDayMeta();renderSpRows();renderVaRows();recalcDay();}
+function refreshDay(){ loadDayMeta(); renderTiles(); renderDayLog(); recalcDay(); }
 
-document.getElementById('dprev').onclick=function(){if(state.cur>0){state.cur--;save();refreshDay();}};
-document.getElementById('dnext').onclick=function(){if(state.cur<state.days.length-1){state.cur++;save();refreshDay();}};
-document.getElementById('addday').onclick=function(){state.days.push(blankSet());state.cur=state.days.length-1;save();refreshDay();};
+document.getElementById('dprev').onclick=function(){ if(state.cur>0){state.cur--;save();refreshDay();} };
+document.getElementById('dnext').onclick=function(){ if(state.cur<state.days.length-1){state.cur++;save();refreshDay();} };
+document.getElementById('addday').onclick=function(){ state.days.push(blankDay()); state.cur=state.days.length-1; save(); refreshDay(); };
 document.getElementById('delday').onclick=function(){
-  if(state.days.length<=1){alert('At least one day is needed.');return;}
-  if(!confirm('Remove Day '+(state.cur+1)+'?'))return;
-  state.days.splice(state.cur,1);if(state.cur>=state.days.length)state.cur=state.days.length-1;save();refreshDay();
+  if(state.days.length<2) return;
+  var st=dayStats(curDay(),state.custom);
+  if(st.n && !confirm('Day '+(state.cur+1)+' has '+st.n+' fish logged. Remove the day and its fish?')) return;
+  state.days.splice(state.cur,1);
+  state.cur=Math.max(0,Math.min(state.cur,state.days.length-1));
+  save(); refreshDay();
 };
-['d-pay','d-date','d-collars','d-gillgut','d-boxes'].forEach(function(id){
-  document.getElementById(id).addEventListener('input',recalcDay);
+[['d-date','date'],['d-collars','collars'],['d-gillgut','gillgut'],['d-boxes','boxes']].forEach(function(p){
+  document.getElementById(p[0]).addEventListener('input',function(){ curDay()[p[1]]=this.value; save(); recalcDay(); });
 });
+document.getElementById('d-pay').addEventListener('change',function(){ curDay().pay=this.value; save(); recalcDay(); });
 
-/* ===== DOCK ACTUALS ===== */
+/* ===================== DOCK ===================== */
+/* Actuals come off the invoice in bulk, by species — the processor doesn't
+   itemize by fish. Value-added there is whatever they actually did.          */
+function actualDays(){
+  var a=state.actual, fish=[];
+  allSpecies().forEach(function(s){
+    var lb=num((a.sp[s.k]||{}).c), u=num((a.sp[s.k]||{}).u);
+    if(lb<=0) return;
+    var v=a.sp[s.k]||{};
+    var vsm=s.sm?num(v.sm):0, vjk=s.jk?num(v.jk):0, vcn=s.cn?num(v.cn):0;
+    /* Represent the actual bulk as two synthetic fish so the per-fish engine
+       can price it: one 12lb+ block carrying all value-added, one under-12 block. */
+    var big=Math.max(0,lb-u);
+    if(big>0) fish.push({id:'a-'+s.k+'-b',sp:s.k,lb:big,va:{sm:vsm,jk:vjk,cn:vcn}});
+    if(u>0)   fish.push({id:'a-'+s.k+'-u',sp:s.k,lb:u,va:{}});
+  });
+  return [{fish:fish,collars:a.collars,gillgut:a.gillgut,boxes:a.boxes,pay:a.pay}];
+}
 function renderActual(){
-  var a=state.actual;
-  var box=document.getElementById('a-sprows');box.innerHTML='';
-  SPECIES.forEach(function(sp){
-    var v=a.sp[sp.k]||{};
-    var row=document.createElement('div');row.className='sprow';
-    row.innerHTML='<span class="nm">'+sp.n+'</span>'+
-      '<input type="number" inputmode="decimal" min="0" class="amt" data-k="'+sp.k+'" value="'+(v.c||'')+'">'+
-      '<span class="cost" id="aspc-'+sp.k+'">—</span>';
-    box.appendChild(row);
-  });
-  box.querySelectorAll('input').forEach(function(inp){
-    inp.addEventListener('input',function(){var k=inp.getAttribute('data-k');a.sp[k]=a.sp[k]||{};a.sp[k].c=inp.value;save();recalcActual();});
-  });
-  var vbox=document.getElementById('a-varows');vbox.innerHTML='';
-  SPECIES.forEach(function(sp){
-    var v=a.sp[sp.k]||{};
-    var g=document.createElement('div');g.className='va-grid';g.style.marginTop='6px';
-    function cell(field,on,val){if(!on)return '<input class="off" disabled>';
-      return '<input type="number" inputmode="decimal" min="0" data-k="'+sp.k+'" data-f="'+field+'" value="'+(val||'')+'">';}
-    g.innerHTML='<span class="vn">'+sp.n.split(' ')[0]+'</span>'+cell('u',sp.sub,v.u)+cell('sm',sp.sm,v.sm)+cell('jk',sp.jk,v.jk)+cell('cn',sp.cn,v.cn);
-    vbox.appendChild(g);
-  });
-  vbox.querySelectorAll('input:not(.off)').forEach(function(inp){
-    inp.addEventListener('input',function(){var k=inp.getAttribute('data-k'),f=inp.getAttribute('data-f');a.sp[k]=a.sp[k]||{};a.sp[k][f]=inp.value;save();recalcActual();});
-  });
+  var a=state.actual, box=document.getElementById('a-sprows'); box.innerHTML='';
   document.getElementById('a-pay').value=a.pay||'cash';
   document.getElementById('a-proc').value=state.actualProc||'';
   document.getElementById('a-collars').value=a.collars||'';
   document.getElementById('a-gillgut').value=a.gillgut||'';
   document.getElementById('a-boxes').value=a.boxes||'';
   document.getElementById('a-invoice').value=state.invoice||'';
+
+  var head=document.createElement('div');
+  head.className='va-grid'; head.style.gridTemplateColumns='1.5fr 1fr 1fr 1fr';
+  head.innerHTML='<span class="vh" style="text-align:left">Species</span><span class="vh">Fish</span><span class="vh">Total lb</span><span class="vh">Under-12 lb</span>';
+  box.appendChild(head);
+  allSpecies().forEach(function(s){
+    var v=a.sp[s.k]||{}, c=a.cnt||{};
+    var g=document.createElement('div');
+    g.className='va-grid'; g.style.gridTemplateColumns='1.5fr 1fr 1fr 1fr'; g.style.marginTop='6px';
+    g.innerHTML='<span class="vn">'+s.n+'</span>'+
+      '<input type="number" inputmode="numeric" class="amt" data-a="cnt" data-k="'+s.k+'" value="'+(c[s.k]||'')+'">'+
+      '<input type="number" inputmode="decimal" class="amt" data-a="c" data-k="'+s.k+'" value="'+(v.c||'')+'">'+
+      (s.u12?'<input type="number" inputmode="decimal" class="amt" data-a="u" data-k="'+s.k+'" value="'+(v.u||'')+'">'
+            :'<input class="off" disabled title="always 12 lb+ rate">');
+    box.appendChild(g);
+  });
+
+  var vbox=document.getElementById('a-varows'); vbox.innerHTML='';
+  allSpecies().filter(hasVA).forEach(function(s){
+    var v=a.sp[s.k]||{};
+    var g=document.createElement('div');
+    g.className='va-grid'; g.style.marginTop='6px';
+    function cell(fld,on,val){
+      return on?'<input type="number" inputmode="decimal" class="amt" data-a="'+fld+'" data-k="'+s.k+'" value="'+(val||'')+'">'
+               :'<input class="off" disabled>';
+    }
+    g.innerHTML='<span class="vn">'+s.n+'</span>'+cell('sm',s.sm,v.sm)+cell('jk',s.jk,v.jk)+cell('cn',s.cn,v.cn)+'<span></span>';
+    vbox.appendChild(g);
+  });
+  if(!vbox.children.length) vbox.innerHTML='<div class="note">No value-added species logged.</div>';
+
+  document.querySelectorAll('[data-a]').forEach(function(i){
+    i.addEventListener('input',function(){
+      var k=i.getAttribute('data-k'), f=i.getAttribute('data-a');
+      if(f==='cnt'){ a.cnt=a.cnt||{}; a.cnt[k]=num(i.value); }
+      else { a.sp[k]=a.sp[k]||{}; a.sp[k][f]=num(i.value); }
+      save(); recalcActual();
+    });
+  });
   recalcActual();
 }
 function recalcActual(){
-  var a=state.actual;
-  a.pay=document.getElementById('a-pay').value;
-  a.collars=document.getElementById('a-collars').value;
-  a.gillgut=document.getElementById('a-gillgut').value;
-  a.boxes=document.getElementById('a-boxes').value;
-  state.actualProc=document.getElementById('a-proc').value;
-  state.invoice=document.getElementById('a-invoice').value;
-  save();
-  SPECIES.forEach(function(sp){
-    var pf=spCost(sp,a.sp[sp.k],R('fp')),ps=spCost(sp,a.sp[sp.k],R('fs'));
-    var el=document.getElementById('aspc-'+sp.k);el.textContent=(pf+ps>0)?money(Math.min(pf,ps)):'—';
-    el.className='cost'+((pf+ps>0)?'':' na');
-  });
-  var qf=quote([a],R('fp'),a.pay),qs=quote([a],R('fs'),a.pay);
+  var a=state.actual, days=actualDays();
+  var qf=quote(days,R('fp'),a.pay,state.custom), qs=quote(days,R('fs'),a.pay,state.custom);
   document.getElementById('a-fp').textContent="Fisherman's "+money(qf.est);
   document.getElementById('a-fs').textContent="Five Star "+money(qs.est);
-  document.getElementById('a-est').textContent=money(Math.min(qf.est,qs.est));
-  document.getElementById('a-cheap').textContent=cheaper(qf.proc,qs.proc);
-  var recon=document.getElementById('a-recon');
-  var inv=num(state.invoice);
-  if(inv>0){
-    var used=state.actualProc==='fs'?qs.est:qf.est;
-    var diff=inv-used;
-    recon.innerHTML='Computed '+(state.actualProc==='fs'?"Five Star":"Fisherman's")+' = '+money(used)+
-      '. Invoice '+money(inv)+' → '+(Math.abs(diff)<0.005?'matches.':(diff>0?'invoice is '+money(diff)+' higher.':'invoice is '+money(-diff)+' lower.'));
-  } else recon.textContent='';
-}
-['a-pay','a-proc','a-collars','a-gillgut','a-boxes','a-invoice'].forEach(function(id){
-  document.getElementById(id).addEventListener('input',recalcActual);
-});
+  var chosen=state.actualProc==='fp'?qf.est:(state.actualProc==='fs'?qs.est:Math.min(qf.est,qs.est));
+  document.getElementById('a-est').textContent=money(chosen);
+  document.getElementById('a-cheap').textContent=cheaper(qf.est,qs.est);
 
-/* ===== SUMMARY ===== */
-function tripSpLbs(setlist){
-  var out={};SPECIES.forEach(function(sp){out[sp.k]=0;});
-  setlist.forEach(function(s){SPECIES.forEach(function(sp){out[sp.k]+=num((s.sp[sp.k]||{}).c);});});
-  return out;
+  var rec=document.getElementById('a-recon'), inv=num(state.invoice);
+  if(!inv||!state.actualProc){ rec.innerHTML=''; }
+  else{
+    var d=inv-chosen;
+    rec.innerHTML=Math.abs(d)<0.01
+      ? '<div class="good">Invoice matches the computed cost exactly.</div>'
+      : '<div class="warn">Invoice is <b>'+money(Math.abs(d))+'</b> '+(d>0?'higher':'lower')+
+        ' than computed ('+money(chosen)+'). Check value-added pounds, collars, and the deposit.</div>';
+  }
+  renderCountCheck();
 }
-function renderSummary(){
-  var estLbs=tripSpLbs(state.days), actLbs=tripSpLbs([state.actual]);
-  var body=document.getElementById('cmp-body');body.innerHTML='';
-  SPECIES.forEach(function(sp){
-    var e=estLbs[sp.k],a=actLbs[sp.k],dl=a-e;
-    var cls=Math.abs(dl)<0.005?'':(dl>0?'delta-pos':'delta-neg');
-    var dtxt=(a>0||e>0)?((dl>0?'+':'')+(Math.round(dl*10)/10)):'—';
-    body.innerHTML+='<tr><td>'+sp.n+'</td><td class="num">'+(e?Math.round(e*10)/10:'—')+'</td><td class="num">'+(a?Math.round(a*10)/10:'—')+
-      '</td><td class="num '+cls+'">'+dtxt+'</td></tr>';
+function renderCountCheck(){
+  var box=document.getElementById('a-count'); if(!box) return;
+  var a=state.actual, rows='', anyActual=false, tl=0,tal=0,tn=0,tan=0;
+  allSpecies().forEach(function(s){
+    var est=speciesStats(state.days,s.k,state.custom);
+    var an=num((a.cnt||{})[s.k]), al=num((a.sp[s.k]||{}).c);
+    if(!est.n && !an && !al) return;
+    if(an||al) anyActual=true;
+    tn+=est.n; tan+=an; tl+=est.lb; tal+=al;
+    var dn=an-est.n;
+    var flag=(an&&dn!==0)?'<span class="delta-neg"> ('+(dn>0?'+':'')+dn+')</span>':'';
+    rows+='<tr><td>'+s.n+'</td><td class="num">'+est.n+'</td><td class="num">'+(an||'—')+flag+'</td>'+
+      '<td class="num">'+lbs(est.lb)+'</td><td class="num">'+(al?lbs(al):'—')+'</td></tr>';
   });
-  var te=0,ts=0;SPECIES.forEach(function(sp){te+=estLbs[sp.k];ts+=actLbs[sp.k];});
-  body.innerHTML+='<tr class="tot"><td>Total lb</td><td class="num">'+(Math.round(te*10)/10)+'</td><td class="num">'+(Math.round(ts*10)/10)+'</td><td class="num">'+((ts-te>=0?'+':'')+(Math.round((ts-te)*10)/10))+'</td></tr>';
+  if(!rows){ box.innerHTML='<div class="note">Log some fish, then enter the processor\'s counts here.</div>'; return; }
+  var dn=tan-tn;
+  box.innerHTML='<table class="cmp"><thead><tr><th>Species</th><th>Logged</th><th>Scaled</th><th>Est. lb</th><th>Actual lb</th></tr></thead>'+
+    '<tbody>'+rows+'<tr class="tot"><td>Total</td><td class="num">'+tn+'</td><td class="num">'+(tan||'—')+'</td>'+
+    '<td class="num">'+lbs(tl)+'</td><td class="num">'+(tal?lbs(tal):'—')+'</td></tr></tbody></table>'+
+    (anyActual&&tan&&dn!==0
+      ? '<div class="warn">You logged <b>'+tn+'</b> fish; the processor scaled <b>'+tan+'</b>. <b>'+
+        Math.abs(dn)+'</b> fish '+(dn<0?'unaccounted for':'more than logged')+'.</div>'
+      : (anyActual&&tan ? '<div class="good">Counts match — '+tn+' fish logged, '+tan+' scaled.</div>' : ''));
+}
+document.getElementById('a-pay').addEventListener('change',function(){ state.actual.pay=this.value; save(); recalcActual(); });
+document.getElementById('a-proc').addEventListener('change',function(){ state.actualProc=this.value; save(); recalcActual(); });
+[['a-collars','collars'],['a-gillgut','gillgut'],['a-boxes','boxes']].forEach(function(p){
+  document.getElementById(p[0]).addEventListener('input',function(){ state.actual[p[1]]=this.value; save(); recalcActual(); });
+});
+document.getElementById('a-invoice').addEventListener('input',function(){ state.invoice=this.value; save(); recalcActual(); });
 
-  var ef=0,es=0;state.days.forEach(function(d){ef+=quote([d],R('fp'),d.pay).est;es+=quote([d],R('fs'),d.pay).est;});
-  var af=quote([state.actual],R('fp'),state.actual.pay).est, as=quote([state.actual],R('fs'),state.actual.pay).est;
-  var inv=num(state.invoice);
+/* ===================== SUMMARY ===================== */
+function renderSummary(){
+  var body=document.getElementById('cmp-body'); body.innerHTML='';
+  var a=state.actual, tn=0,te=0,ta=0;
+  allSpecies().forEach(function(s){
+    var est=speciesStats(state.days,s.k,state.custom);
+    var al=num((a.sp[s.k]||{}).c);
+    if(!est.n && !al) return;
+    tn+=est.n; te+=est.lb; ta+=al;
+    var d=al?(al-est.lb):0;
+    var dc=al?('<span class="'+(d>=0?'delta-pos':'delta-neg')+'">'+(d>0?'+':'')+lbs(d)+'</span>'):'—';
+    body.innerHTML+='<tr><td>'+s.n+'</td><td class="num">'+est.n+'</td><td class="num">'+lbs(est.lb)+
+      '</td><td class="num">'+(al?lbs(al):'—')+'</td><td class="num">'+dc+'</td></tr>';
+  });
+  if(!body.innerHTML) body.innerHTML='<tr><td colspan="5" class="note">No fish logged yet.</td></tr>';
+  else{
+    var d=ta?(ta-te):0;
+    body.innerHTML+='<tr class="tot"><td>Total</td><td class="num">'+tn+'</td><td class="num">'+lbs(te)+
+      '</td><td class="num">'+(ta?lbs(ta):'—')+'</td><td class="num">'+
+      (ta?'<span class="'+(d>=0?'delta-pos':'delta-neg')+'">'+(d>0?'+':'')+lbs(d)+'</span>':'—')+'</td></tr>';
+  }
+
+  var pay=curDay().pay;
+  var ef=quote(state.days,R('fp'),pay,state.custom), es=quote(state.days,R('fs'),pay,state.custom);
+  var af=quote(actualDays(),R('fp'),a.pay,state.custom), as=quote(actualDays(),R('fs'),a.pay,state.custom);
   var cb=document.getElementById('cost-body');
+  function row(l,v,cls){ return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+l+'</td><td class="num">'+v+'</td></tr>'; }
   cb.innerHTML=
-    '<tr><th>Cost</th><th>Fisherman\'s</th><th>Five Star</th></tr>'+
-    '<tr><td>Trip estimate</td><td class="num">'+money(ef)+'</td><td class="num">'+money(es)+'</td></tr>'+
-    '<tr><td>Dock actual (calc)</td><td class="num">'+(af+as>0?money(af):'—')+'</td><td class="num">'+(af+as>0?money(as):'—')+'</td></tr>'+
-    '<tr class="tot"><td>Invoice paid</td><td class="num" colspan="2" style="text-align:right">'+(inv>0?money(inv)+' ('+(state.actualProc==='fs'?'Five Star':state.actualProc==='fp'?"Fisherman's":'—')+')':'—')+'</td></tr>';
+    row("Estimate — Fisherman's",money(ef.est))+
+    row('Estimate — Five Star',money(es.est))+
+    row('<b>Estimate — cheaper</b>',money(Math.min(ef.est,es.est)),'tot')+
+    (num((a.sp.yt||{}).c)||num((a.sp.bft||{}).c)||num((a.sp.yft||{}).c)||state.invoice
+      ? row('Actual — computed',money(state.actualProc==='fs'?as.est:af.est))+
+        (num(state.invoice)?row('<b>Invoice paid</b>',money(num(state.invoice)),'tot'):'')
+      : '');
+  document.getElementById('rate-vamin').textContent=VAMIN;
+  document.getElementById('exp-v1').style.display=localStorage.getItem(OLDKEY+'.backup')?'block':'none';
 }
 
-/* ===== EXPORT ===== */
 function tripSummaryText(){
-  var estLbs=tripSpLbs(state.days),actLbs=tripSpLbs([state.actual]);
-  var ef=0,es=0;state.days.forEach(function(d){ef+=quote([d],R('fp'),d.pay).est;es+=quote([d],R('fs'),d.pay).est;});
-  var af=quote([state.actual],R('fp'),state.actual.pay).est,as=quote([state.actual],R('fs'),state.actual.pay).est;
-  var L=[];L.push('SALTWATER TRIP — FISH PROCESSING RECORD');
-  L.push('Fishing days logged: '+state.days.length);
-  L.push('');L.push('CATCH (lb) — estimate vs actual:');
-  SPECIES.forEach(function(sp){if(estLbs[sp.k]||actLbs[sp.k])L.push('  '+sp.n+': est '+(Math.round(estLbs[sp.k]*10)/10)+' / actual '+(Math.round(actLbs[sp.k]*10)/10));});
-  var te=0,ta=0;SPECIES.forEach(function(sp){te+=estLbs[sp.k];ta+=actLbs[sp.k];});
-  L.push('  TOTAL: est '+(Math.round(te*10)/10)+' lb / actual '+(Math.round(ta*10)/10)+' lb');
-  L.push('');L.push('PROCESSING COST:');
-  L.push('  Trip estimate — Fisherman\'s '+money(ef)+' | Five Star '+money(es));
-  if(af+as>0)L.push('  Dock actual (calc) — Fisherman\'s '+money(af)+' | Five Star '+money(as));
-  if(num(state.invoice)>0)L.push('  Invoice paid — '+money(num(state.invoice))+' ('+(state.actualProc==='fs'?'Five Star':state.actualProc==='fp'?"Fisherman's":'processor n/a')+')');
-  return L.join('\n');
-}
-function buildCSV(){
-  var rows=[['phase','day','date','pay','species','caught_lb','under12_lb','smoke_lb','jerky_lb','can_lb','collars_ea','gillgut_lb','boxes']];
+  var L=['CATCH LOGGER — TRIP SUMMARY',''];
+  var tn=0,tl=0;
   state.days.forEach(function(d,i){
-    SPECIES.forEach(function(sp){var v=d.sp[sp.k]||{};
-      rows.push(['estimate',(i+1),d.date||'',d.pay||'',sp.n,num(v.c)||'',num(v.u)||'',num(v.sm)||'',num(v.jk)||'',num(v.cn)||'',
-        sp.k==='yt'?(num(d.collars)||''):'', sp.k==='yt'?(num(d.gillgut)||''):'', sp.k==='yt'?(num(d.boxes)||''):'']);
+    var st=dayStats(d,state.custom);
+    tn+=st.n; tl+=st.lb;
+    if(!st.n) return;
+    L.push('Day '+(i+1)+(d.date?' ('+d.date+')':'')+' — '+st.n+' fish, '+lbs(st.lb)+' lb');
+    allSpecies().forEach(function(s){
+      var f=d.fish.filter(function(x){return x.sp===s.k;});
+      if(!f.length) return;
+      var lb=f.reduce(function(p,x){return p+num(x.lb);},0);
+      L.push('   '+s.n+': '+f.length+' fish, '+lbs(lb)+' lb  ['+f.map(function(x){return lbs(num(x.lb));}).join(', ')+']');
     });
   });
-  var a=state.actual;
-  SPECIES.forEach(function(sp){var v=a.sp[sp.k]||{};
-    rows.push(['actual','trip','',a.pay||'',sp.n,num(v.c)||'',num(v.u)||'',num(v.sm)||'',num(v.jk)||'',num(v.cn)||'',
-      sp.k==='yt'?(num(a.collars)||''):'', sp.k==='yt'?(num(a.gillgut)||''):'', sp.k==='yt'?(num(a.boxes)||''):'']);
+  L.push('', 'TRIP: '+tn+' fish, '+lbs(tl)+' lb');
+  var pay=curDay().pay;
+  var ef=quote(state.days,R('fp'),pay,state.custom), es=quote(state.days,R('fs'),pay,state.custom);
+  L.push("Fisherman's est: "+money(ef.est)+(ef.ship?'  (+ shipping '+money(ef.ship)+')':''));
+  L.push('Five Star est:   '+money(es.est));
+  L.push('Cheaper: '+cheaper(ef.est,es.est));
+  if(num(state.invoice)) L.push('Invoice paid: '+money(num(state.invoice)));
+  L.push('','Estimates only — confirm at drop-off.');
+  return L.join('\n');
+}
+
+function buildCSV(){
+  var rows=[];
+  rows.push(['# COUNT & WEIGHT BY DAY — legal record']);
+  rows.push(['day','date','species','fish_count','total_lb','under12_lb','smoke_lb','jerky_lb','can_lb']);
+  state.days.forEach(function(d,i){
+    allSpecies().forEach(function(s){
+      var st=speciesStats([d],s.k,state.custom);
+      if(!st.n) return;
+      rows.push([i+1,d.date||'',s.n,st.n,lbs(st.lb),lbs(st.u12lb),lbs(st.va.sm),lbs(st.va.jk),lbs(st.va.cn)]);
+    });
   });
   rows.push([]);
-  rows.push(['invoice_paid',num(state.invoice)||'','processor',state.actualProc||'']);
-  return rows.map(function(r){return r.map(function(c){c=(c===undefined||c===null)?'':String(c);return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c;}).join(',');}).join('\n');
+  rows.push(['# FISH DETAIL — the journal']);
+  rows.push(['day','date','time','species','lb','under12','smoke_lb','jerky_lb','can_lb','fp_cost','notes']);
+  state.days.forEach(function(d,i){
+    d.fish.slice().sort(function(a,b){return String(a.t).localeCompare(String(b.t));}).forEach(function(f){
+      var s=sp(f.sp), a=vaApplied(f,s);
+      rows.push([i+1,d.date||'',f.t||'',s?s.n:f.sp,lbs(num(f.lb)),isUnder12(f,s)?'yes':'',
+        a.sm||'',a.jk||'',a.cn||'',(Math.round(fishCost(f,R('fp'),state.custom)*100)/100),f.notes||'']);
+    });
+  });
+  rows.push([]);
+  rows.push(['# DAY EXTRAS']);
+  rows.push(['day','collars_ea','gillgut_lb','ship_boxes','pay']);
+  state.days.forEach(function(d,i){ rows.push([i+1,num(d.collars)||'',num(d.gillgut)||'',num(d.boxes)||'',d.pay||'']); });
+  rows.push([]);
+  rows.push(['# ACTUAL AT DOCK']);
+  rows.push(['species','scaled_fish','scaled_lb','under12_lb','smoke_lb','jerky_lb','can_lb']);
+  var a=state.actual;
+  allSpecies().forEach(function(s){
+    var v=a.sp[s.k]||{}, c=(a.cnt||{})[s.k];
+    if(!num(v.c) && !num(c)) return;
+    rows.push([s.n,num(c)||'',num(v.c)||'',num(v.u)||'',num(v.sm)||'',num(v.jk)||'',num(v.cn)||'']);
+  });
+  rows.push([]);
+  rows.push(['processor',state.actualProc||'','invoice_paid',num(state.invoice)||'']);
+  return rows.map(function(r){
+    return r.map(function(c){
+      c=(c===undefined||c===null)?'':String(c);
+      return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c;
+    }).join(',');
+  }).join('\n');
 }
 function shareOrDownload(filename,text,mime){
   var blob=new Blob([text],{type:mime});
-  var file=new File([blob],filename,{type:mime});
-  if(navigator.canShare&&navigator.canShare({files:[file]})){
-    navigator.share({files:[file],title:filename}).catch(function(){});
-  } else {
-    var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=filename;
-    document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1500);
-  }
+  try{
+    var file=new File([blob],filename,{type:mime});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      navigator.share({files:[file],title:filename}).catch(function(){}); return;
+    }
+  }catch(e){}
+  var url=URL.createObjectURL(blob);var el=document.createElement('a');
+  el.href=url;el.download=filename;document.body.appendChild(el);el.click();el.remove();
+  setTimeout(function(){URL.revokeObjectURL(url);},1500);
 }
-document.getElementById('exp-csv').onclick=function(){shareOrDownload('catch_trip.csv',buildCSV(),'text/csv');};
-document.getElementById('exp-json').onclick=function(){shareOrDownload('catch_trip_backup.json',JSON.stringify(state,null,2),'application/json');};
+document.getElementById('exp-csv').onclick=function(){ shareOrDownload('catch_trip.csv',buildCSV(),'text/csv'); };
+document.getElementById('exp-json').onclick=function(){ shareOrDownload('catch_trip_backup.json',JSON.stringify(state,null,2),'application/json'); };
+document.getElementById('exp-v1').onclick=function(){
+  var old=localStorage.getItem(OLDKEY+'.backup')||'{}';
+  shareOrDownload('catch_logger_v1_backup.json',old,'application/json');
+};
 document.getElementById('copy-sum').onclick=function(){
   var t=tripSummaryText();
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){alert('Trip summary copied.');},function(){prompt('Copy:',t);});}
+  if(navigator.clipboard&&navigator.clipboard.writeText)
+    navigator.clipboard.writeText(t).then(function(){ toast('Trip summary copied.'); },function(){ prompt('Copy:',t); });
   else prompt('Copy:',t);
 };
 document.getElementById('newtrip').onclick=function(){
-  if(!confirm('Clear ALL data and start a new trip? Export a backup first if you need it.'))return;
-  var rates=state.rates;state={days:[blankSet()],cur:0,actual:blankSet(),actualProc:'',invoice:'',rates:rates};save();refreshDay();renderActual();renderSummary();switchView('log');
+  if(!confirm('Clear ALL data and start a new trip? Export a backup first if you need it.')) return;
+  state=freshState(state.rates); save();
+  refreshDay(); renderActual(); renderSummary(); switchView('log');
 };
 
-/* ===== RATE EDITOR ===== */
+/* ===================== RATE EDITOR ===================== */
 function renderRateEditor(){
-  var box=document.getElementById('rate-editor');box.innerHTML='';
-  var fields=[['big','Fillet 12lb+'],['small','Fillet <12lb'],['smoke','Smoked'],['jerky','Jerky'],['can','Canned'],['collar','Collars ea'],['gillgut','Gill&gut'],['ccfee','Card fee %'],['deposit','Deposit']];
-  var head=document.createElement('div');head.className='va-grid';head.style.gridTemplateColumns='1.4fr 1fr 1fr';
+  var box=document.getElementById('rate-editor'); box.innerHTML='';
+  var fields=[['big','Fillet 12lb+'],['small','Fillet <12lb'],['smoke','Smoked'],['jerky','Jerky'],
+              ['can','Canned'],['collar','Collars ea'],['gillgut','Gill&gut'],['ccfee','Card fee %'],['deposit','Deposit']];
+  var head=document.createElement('div');
+  head.className='va-grid'; head.style.gridTemplateColumns='1.4fr 1fr 1fr';
   head.innerHTML='<span class="vh" style="text-align:left">Service</span><span class="vh">Fisherman\'s</span><span class="vh">Five Star</span>';
   box.appendChild(head);
   fields.forEach(function(f){
-    var g=document.createElement('div');g.className='va-grid';g.style.gridTemplateColumns='1.4fr 1fr 1fr';g.style.marginTop='6px';
-    var vf=state.rates.fp[f[0]], vs=state.rates.fs[f[0]];
+    var g=document.createElement('div');
+    g.className='va-grid'; g.style.gridTemplateColumns='1.4fr 1fr 1fr'; g.style.marginTop='6px';
     g.innerHTML='<span class="vn">'+f[1]+'</span>'+
-      '<input type="number" inputmode="decimal" data-p="fp" data-f="'+f[0]+'" value="'+vf+'">'+
-      '<input type="number" inputmode="decimal" data-p="fs" data-f="'+f[0]+'" value="'+vs+'">';
+      '<input type="number" inputmode="decimal" data-p="fp" data-f="'+f[0]+'" value="'+state.rates.fp[f[0]]+'">'+
+      '<input type="number" inputmode="decimal" data-p="fs" data-f="'+f[0]+'" value="'+state.rates.fs[f[0]]+'">';
     box.appendChild(g);
   });
   box.querySelectorAll('input').forEach(function(inp){
-    inp.addEventListener('input',function(){state.rates[inp.getAttribute('data-p')][inp.getAttribute('data-f')]=num(inp.value);save();recalcDay();recalcActual();renderSummary();});
+    inp.addEventListener('input',function(){
+      state.rates[inp.getAttribute('data-p')][inp.getAttribute('data-f')]=num(inp.value);
+      save(); recalcDay(); recalcActual(); renderSummary();
+    });
   });
 }
-document.getElementById('rate-reset').onclick=function(){if(confirm('Reset rates to June 2026?')){state.rates=JSON.parse(JSON.stringify(DEFAULT_RATES));save();renderRateEditor();recalcDay();recalcActual();renderSummary();}};
+document.getElementById('rate-reset').onclick=function(){
+  if(!confirm('Reset rates to June 2026?')) return;
+  state.rates=JSON.parse(JSON.stringify(DEFAULT_RATES));
+  save(); renderRateEditor(); recalcDay(); recalcActual(); renderSummary();
+};
 
-/* ===== VIEW SWITCH ===== */
+/* ===================== VIEW SWITCH ===================== */
 function switchView(v){
-  ['log','actual','summary'].forEach(function(x){document.getElementById('view-'+x).classList.toggle('hide',x!==v);});
-  document.querySelectorAll('.tabbar button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-view')===v);});
-  if(v==='actual')renderActual();
-  if(v==='summary'){renderSummary();renderRateEditor();}
+  ['log','actual','summary'].forEach(function(x){
+    document.getElementById('view-'+x).classList.toggle('hide',x!==v);
+  });
+  document.querySelectorAll('.tabbar button').forEach(function(b){
+    b.classList.toggle('on',b.getAttribute('data-view')===v);
+  });
+  if(v==='actual') renderActual();
+  if(v==='summary'){ renderSummary(); renderRateEditor(); }
+  document.getElementById('stick').classList.toggle('hide',v!=='log');
   window.scrollTo(0,0);
 }
-document.querySelectorAll('.tabbar button').forEach(function(b){b.onclick=function(){switchView(b.getAttribute('data-view'));};});
+document.querySelectorAll('.tabbar button').forEach(function(b){
+  b.onclick=function(){ switchView(b.getAttribute('data-view')); };
+});
 
-/* ===== INIT ===== */
+/* ===================== INIT ===================== */
 refreshDay();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
