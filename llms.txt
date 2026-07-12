@@ -1,0 +1,28 @@
+# Catch Logger
+
+> Offline, installable PWA for logging a saltwater fishing trip's catch and estimating
+> fish-processing cost at sea with no internet: log pounds per species per day, compare two
+> San Diego processors, reconcile estimate vs. actual at the dock, then export CSV/JSON —
+> all in device-local storage, nothing uploaded.
+
+## Start here
+- [AGENTS.md](AGENTS.md): canonical agent guide — file map, data contract, and verification gates.
+- [README.md](README.md): human quickstart.
+- [CHANGELOG.md](CHANGELOG.md): version history.
+- [CONTRIBUTING.md](CONTRIBUTING.md): commit + README standard.
+
+## App
+- [index.html](index.html): the entire app — cost engine, UI, and local-storage persistence, inline.
+- [sw.js](sw.js): service worker — offline caching of the app shell (bump cache version on app changes).
+- [manifest.webmanifest](manifest.webmanifest): PWA manifest — name, icons, standalone display.
+- [icon-180.png](icon-180.png): iOS home-screen icon.
+- [icon-512.png](icon-512.png): maskable app icon.
+- [LICENSE](LICENSE): usage terms.
+
+## Key rules
+- Offline-first, on-device only: no network calls for data, nothing uploaded; local storage is the source of truth.
+- Cost engine must stay penny-for-penny identical to the Saltwater Trip Planner and the Numbers calculator.
+- Self-contained: all engine/UI/state live in index.html — no external dependencies, no build step.
+- Any change to cached assets requires bumping the cache version in sw.js so installed devices refresh.
+- Public repo: never commit keys, analytics, or personal identifiers.
+- Commits follow CONTRIBUTING.md; update README/CHANGELOG on every feat/fix.
