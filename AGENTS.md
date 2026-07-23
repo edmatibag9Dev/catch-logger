@@ -84,10 +84,12 @@ never reproduce.
 | Path | Committed? | Purpose |
 |---|---|---|
 | `AGENTS.md` | yes | This guide. |
+| `llms.txt` | yes | Machine-readable index of the docs — the summary + pipeline + start-here links agents and LLMs read first. |
 | `README.md` | yes | Human quickstart, install, cost model, and end-of-trip workflow. |
 | `CONTRIBUTING.md` | yes | Canonical commit + README standard. |
 | `CHANGELOG.md` | yes | Version history. |
 | `SPEC-catch-log.md` | yes | Design spec for the per-fish model and the corrected cost rules. |
+| `.gitignore` | yes | Excludes macOS junk, exported trip data (`*.csv`, `catch_trip*.json`), and editor temp files so real trips stay off the public repo. |
 | `engine.js` | yes | **The cost engine — SINGLE SOURCE OF TRUTH.** Do not duplicate this math. |
 | `index.html` | yes | The app — UI, tabs, and local-storage persistence. Loads `engine.js`. |
 | `test-engine.js` | yes | Engine regression suite, 61 assertions. `node test-engine.js` |
