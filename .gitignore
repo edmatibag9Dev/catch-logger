@@ -12,3 +12,15 @@ catch_trip_backup*.json
 .vscode/
 *.swp
 *~
+
+# Secrets and local-only config (required by repo standard)
+.env
+.env.*
+!.env.example
+CONFIG.local.md
+
+# Backups, environments, language noise (required by repo standard)
+*.bak*
+.venv/
+__pycache__/
+node_modules/

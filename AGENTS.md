@@ -1,4 +1,5 @@
 # AGENTS.md — guide for AI agents working in this repo
+> Standard: REPO-STANDARD 2026-10-09 · Commits, README and staging: CONTRIBUTING.md
 
 This file is the canonical entry point for any AI agent (Claude Code, Cowork, Codex, etc.)
 asked to **use, reference, extend, or rebuild** this project. Read it before acting.
@@ -86,10 +87,10 @@ never reproduce.
 | `AGENTS.md` | yes | This guide. |
 | `llms.txt` | yes | Machine-readable index of the docs — the summary + pipeline + start-here links agents and LLMs read first. |
 | `README.md` | yes | Human quickstart, install, cost model, and end-of-trip workflow. |
-| `CONTRIBUTING.md` | yes | Canonical commit + README standard. |
+| `CONTRIBUTING.md` | yes | Verbatim copy of the canonical commit, README and staging standard. Never edit here; repo-specific rules go in this file. |
 | `CHANGELOG.md` | yes | Version history. |
 | `SPEC-catch-log.md` | yes | Design spec for the per-fish model and the corrected cost rules. |
-| `.gitignore` | yes | Excludes macOS junk, exported trip data (`*.csv`, `catch_trip*.json`), and editor temp files so real trips stay off the public repo. |
+| `.gitignore` | yes | Excludes macOS junk, exported trip data (`*.csv`, `catch_trip*.json`), editor temp files, secrets/local config (`.env*`, `CONFIG.local.md`), and `node_modules/` so real trips stay off the public repo. |
 | `engine.js` | yes | **The cost engine — SINGLE SOURCE OF TRUTH.** Do not duplicate this math. |
 | `index.html` | yes | The app — UI, tabs, and local-storage persistence. Loads `engine.js`. |
 | `test-engine.js` | yes | Engine regression suite, 61 assertions. `node test-engine.js` |
@@ -167,6 +168,8 @@ Rules an agent must preserve:
 6. CSV export and JSON backup round-trip cleanly.
 7. `sw.js` cache name bumped if any cached asset changed.
 8. Commit follows `CONTRIBUTING.md`; README + CHANGELOG updated on any `feat` / `fix`.
+9. `python3 ~/.claude/skills/repo-standard/scripts/repo-check.py .` — no FAIL lines. Add `--public`:
+   this is a public repo, so the strict privacy scrub applies.
 
 **Gate 3 from the old version — "matches the Trip Planner + Numbers calculator penny-for-penny" — has
 been deleted on purpose. It is how the bug survived.** Correctness is defined by `test-engine.js` and

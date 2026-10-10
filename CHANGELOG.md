@@ -1,6 +1,27 @@
 # Changelog
 
 All notable changes to Catch Logger are recorded here.
+Format follows [Keep a Changelog](https://keepachangelog.com/), newest first; dates are America/Los_Angeles.
+Gitignored data files (exported trip CSV/JSON, `.env`, `CONFIG.local.md`) are never committed.
+
+## [2026-10-10] — Conform to repo standard 2026-10-09
+
+Documentation and repo-hygiene only. No change to the app, the cost engine, or stored data.
+
+### Changed
+- `CONTRIBUTING.md` replaced with a verbatim copy of the current canonical standard
+  (the repo held an older 2026-06-02 version). No repo-specific rules were in the old copy.
+- `README.md` — the merged "Overview / Purpose" section is split into its own
+  **Project Overview** and **Purpose** sections, and "Known Limitations / Workarounds"
+  into **Known Limitations** and **Workarounds** (one workaround per limitation).
+  Owner's full name removed from the public README. Added a "Last updated" line.
+- `AGENTS.md` — added the `Standard:` stamp line, a final verification gate that runs
+  `repo-check.py`, and refreshed the File map rows for `CONTRIBUTING.md` and `.gitignore`.
+- `CHANGELOG.md` — now declares Keep a Changelog format.
+
+### Added
+- `.gitignore` entries required by the standard: `.env`, `.env.*`, `!.env.example`,
+  `CONFIG.local.md`, `*.bak*`, `.venv/`, `__pycache__/`, `node_modules/`.
 
 ## [2.0.0] — 2026-07-12
 

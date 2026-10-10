@@ -2,7 +2,11 @@
 
 Offline, installable iPhone web app that logs a saltwater fishing trip **fish by fish** and estimates the fish‑processing bill — at sea, with no internet.
 
-## Overview / Purpose
+## Project Overview
+
+Catch Logger is an offline, installable web app (PWA) for iPhone. It logs every kept fish individually and estimates the fish‑processing bill from **Fisherman's Processing** and **Five Star Fish Processing**, naming the cheaper one. Technically it is plain HTML/CSS/JS — `index.html`, the cost engine `engine.js`, and a service worker — served as static files from GitHub Pages and installed via Safari → Add to Home Screen. At the dock it reconciles the estimate against actual scale weights, fish counts, and the real invoice; all data stays in device‑local storage.
+
+## Purpose
 
 On a San Diego long‑range trip there is no signal, and the processing bill is one of the largest costs of the trip after the ticket. Two San Diego processors — **Fisherman's Processing** and **Five Star Fish Processing** — price the same catch very differently depending on fish size and what you have smoked, jerkied, or canned. Deciding which one to use, and roughly what you'll pay, has to happen *before* you dock.
 
@@ -14,7 +18,7 @@ Every fish you keep gets one row. That single row does three jobs at once:
 2. **The catch journal** — time, weight, and a free‑text note on how it ate.
 3. **The cost estimate** — the input to the processing engine.
 
-Built for Ed Matibag. Runs entirely on the phone; nothing is uploaded.
+Built for Ed. Runs entirely on the phone; nothing is uploaded.
 
 ## Features
 
@@ -83,14 +87,23 @@ Estimate vs. actual (fish, pounds, cost). **Export CSV**, copy a trip summary, s
 
 Rates change. Confirm them before each trip and update the Rates panel if they've moved.
 
-## Known Limitations / Workarounds
+## Known Limitations
 
-- **Rail weights are guesses.** Anglers estimate high — commonly 15–25%. The processor's scale is the truth. Everything this app produces is an *estimate*; confirm at drop‑off.
-- **The 12 lb line is doing real money work on a guessed number.** An 11.5 lb vs 12.5 lb yellowtail flips the Fisherman's rate ($2.80 vs $1.95 — the *small* fish costs more). Fish in the 10–14 lb band are flagged `~` for exactly this reason.
-- **iOS can evict local storage.** The app calls `navigator.storage.persist()`, but the real protection is: install to the Home Screen (not a bookmark), and **export a JSON/CSV backup at the end of each day.**
-- **No photos.** Local storage caps around 5 MB. Note the time in a fish's notes and let the camera roll hold the image.
+- **Rail weights are guesses.** Anglers estimate high — commonly 15–25%. The processor's scale is the truth. Everything this app produces is an *estimate*.
+- **The 12 lb line is doing real money work on a guessed number.** An 11.5 lb vs 12.5 lb yellowtail flips the Fisherman's rate ($2.80 vs $1.95 — the *small* fish costs more).
+- **iOS can evict local storage.** The app calls `navigator.storage.persist()`, but that alone is not the real protection.
+- **No photos.** Local storage caps around 5 MB.
 - **Released fish are not modeled.** Only kept‑and‑killed fish are logged, so every logged fish bills.
-- **The Numbers calculator and the planner webpage still carry the v1 cost bugs** (see below). Until they're fixed they will disagree with this app — **and this app is the correct one.**
+- **The Numbers calculator and the planner webpage still carry the v1 cost bugs** (see Build Notes). Until they're fixed they will disagree with this app — **and this app is the correct one.**
+
+## Workarounds
+
+- **Rail weights are guesses** → confirm at drop‑off. Enter the processor's actual scale weights and fish counts on the **Dock** tab so the app reconciles against the truth.
+- **The 12 lb line** → fish in the 10–14 lb band are flagged `~` for exactly this reason. Treat flagged fish as able to land in either tier until the scale settles it.
+- **iOS storage eviction** → install to the Home Screen (not a bookmark), and **export a JSON/CSV backup at the end of each day.**
+- **No photos** → note the time in a fish's notes and let the camera roll hold the image.
+- **Released fish** → no workaround; this is deliberate. Log only fish that were kept and killed.
+- **Numbers calculator and planner webpage** → no workaround inside this repo. Trust this app's figures. The fix belongs in those two artifacts, which should read `engine.js` rather than copy its math.
 
 ## Build Notes
 
@@ -118,3 +131,7 @@ v2 fixes both, and extracts the engine so the mistake cannot be made again. **If
 5. On the phone, open the app **while online once** so the service worker fetches the new shell.
 
 **Storage version:** the state key is `catchlogger.v2`. A breaking change to the data model needs a new key plus a migration path — see `load()` in `index.html` for how v1 was preserved rather than lossily converted.
+
+---
+
+*Last updated: 2026-10-10*
