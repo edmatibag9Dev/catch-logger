@@ -4,6 +4,12 @@ All notable changes to Catch Logger are recorded here.
 Format follows [Keep a Changelog](https://keepachangelog.com/), newest first; dates are America/Los_Angeles.
 Gitignored data files (exported trip CSV/JSON, `.env`, `CONFIG.local.md`) are never committed.
 
+
+## [2026-10-10] — LICENSE names the GitHub handle
+
+### Changed
+- `LICENSE`: the copyright holder is now the GitHub handle `edmatibag9Dev` instead of the owner's
+  full name. Public repos attribute to the handle (repo standard §8).
 ## [2026-10-10] — Conform to repo standard 2026-10-09
 
 Documentation and repo-hygiene only. No change to the app, the cost engine, or stored data.
